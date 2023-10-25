@@ -2,12 +2,11 @@ import React, { useState } from 'react';
 import css from './ContactForm.module.css';
 import { useDispatch, useSelector } from 'react-redux';
 import { selectContacts } from 'redux/selectors';
-import { nanoid } from 'nanoid';
 import { addContact } from 'redux/phoneBookSlice';
 
 export const ContactForm = () => {
   const [name, setName] = useState('');
-  const [number, setNumber] = useState('');
+  const [phone, setPhone] = useState('');
 
   const contacts = useSelector(selectContacts);
   const dispatch = useDispatch();
@@ -18,8 +17,8 @@ export const ContactForm = () => {
         setName(event.target.value);
         break;
       }
-      case 'number': {
-        setNumber(event.target.value);
+      case 'phone': {
+        setPhone(event.target.value);
         break;
       }
       default:
@@ -38,14 +37,12 @@ export const ContactForm = () => {
     }
     const newContact = {
       name,
-      number,
-      id: nanoid(),
-      favourite: false,
+      phone,
     };
     dispatch(addContact(newContact));
 
     setName('');
-    setNumber('');
+    setPhone('');
   };
 
   return (
@@ -67,9 +64,9 @@ export const ContactForm = () => {
           Number
           <input
             onChange={handleInputChange}
-            value={number}
+            value={phone}
             type="tel"
-            name="number"
+            name="phone"
             className={css.input}
             required
           />
